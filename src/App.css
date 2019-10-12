@@ -1,22 +1,48 @@
+html {
+  background-color: #f8f9fa;
+}
+
 .App {
   text-align: center;
+  background-color: #f8f9fa;
 }
 
-.App-logo {
-  height: 40vmin;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+.App body {
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  padding: 1.25rem;
+	max-width: 800px;
+  margin: auto;
+  
+  
 }
 
-.App-link {
-  color: #09d3ac;
+.App footer p {
+  margin-top: 4rem;
+  margin-bottom: 10rem;
+  padding: 1.25rem;
+	max-width: 800px;
+  margin: auto;
+  
+}
+
+.App Form {
+    width: 100%;
+    max-width: 330px;
+    padding: 15px;
+    margin: auto;
+}
+
+.App Form h1 {
+  text-align: center;
+  margin: auto;
+  margin-top: 40px;
+	font-size: 25px;
+}
+
+.App Form Button {
+  padding: .5rem 1rem;
+}
+
+#alertWarn {
+  margin-top: 2rem;
 }
