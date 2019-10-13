@@ -2,8 +2,11 @@ import React from 'react';
 import './App.css';
 import Login from './Container/Login/Login';
 import Navbar from './Component/Navbar/Navbar';
+import Footer from './Component/Footer/Footer';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Alert from 'react-bootstrap/Alert';
+
+
 
 function App() {
   return (
@@ -15,14 +18,9 @@ function App() {
 
       <body>
         <Login />
-
-        <Alert variant = 'warning' id = 'alertWarn'> The site is still under constuction. </Alert>
       </body>
 
-      <footer>
-        <p> ©️ 上海海事大学信息工程学院小可爱 </p>
-      </footer>
-      
+    <Footer />
     </div>
   );
 }
