@@ -54,13 +54,13 @@ class Login extends Component {
                     info: res.data,
                 })
 
-                if (this.state.info.code !== 200){
+                if (this.state.info.status !== 200){
                     this.setState({
                         ifClicked: false,
                         pwdVal: false,
                     })
                 }
-                else if(this.state.info.code === 200){
+                else if(this.state.info.status === 200){
                     
                     this.setState({
                         pwdVal: true,

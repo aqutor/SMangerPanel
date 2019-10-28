@@ -37,7 +37,7 @@ class Portal extends Component{
                 <br />
 
                 <section className = 'RoleSelect'>
-                    <Card style={{ width: '18rem',  }}>
+                    <Card style={{ width: '18rem',}}>
                         <Card.Img variant="top" src={profileimg} width={71} height={95} top='400px' style={{ marginTop: '1em' }} />
                         <Card.Body>
                             <NavLink to={{
@@ -49,7 +49,7 @@ class Portal extends Component{
                     <Card style={{ width: '18rem',  }}>
                         <Card.Img variant="top" src={profileimg} width={71} height={95} top='400px' style={{ marginTop: '1em' }} />
                         <Card.Body>
-                            <Button variant="primary">个人信息</Button>
+                            <Button variant="primary">pending</Button>
                         </Card.Body>
                     </Card>
                 </section>

@@ -6,6 +6,7 @@ import NavPortal from './Component/NavPortal/NavPortal';
 import Portal from './Container/Portal/Portal'
 import Footer from './Component/Footer/Footer';
 import Profile from './Container/Portal/Profile/Profile'
+import DutyDay from './Container/Portal/DutyDay/DutyDay'
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -41,7 +42,8 @@ class App extends Component{
         <Switch>
           <Route path='/' exact component = {() => <Login  />} />
           <Route path='/Portal' exact component = {() => <Portal />} />
-          <Route path='/Portal/Profile' component = {() => <Profile />} />
+          <Route path='/Portal/Profile' exact component = {() => <Profile />} />
+          <Route path='/Portal/DutyDay' exact component = {() => <DutyDay />} />
         </Switch>
       </main>
 

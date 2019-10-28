@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { withRouter, Redirect } from 'react-router-dom';
-import { Form,  Col, Row, Button } from 'react-bootstrap';
+import { Form,  Col, Row, Button, Modal } from 'react-bootstrap';
+import SingleDutyDay from '../../../Component/Forms/SingleDutyDay/SingleDutyDay';
 import './Profile.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import axios from 'axios';
 
 class Profile extends Component {
     state = {
@@ -10,6 +12,11 @@ class Profile extends Component {
         isChecked: null,
         pwd: null,
         cpwd: null,
+        phone: null,
+        curpwd: null,
+        show: false,
+        SDM: null,
+        duties: null,
     }
 
     componentDidMount(){
@@ -22,33 +29,60 @@ class Profile extends Component {
             this.setState({
                 userinfo: this.props.location.state.userinfo,
                 isChecked: gender,
+            })
+
+            let config = {
+                headers: {
+                    'token': this.props.location.state.userinfo.token,
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                }
             }
-            )
+            // loading config
+            axios.get('/api/duty/search', config )
+            .then((res) => {
+                this.setState({
+                    SDM: res.data.data.same_date_member,
+                })
+            })
+            .catch((err) => {
+                console.log("AXIOS ERROR: ", err);
+                return;
+            })
+
+            axios.get('/api/duty/search', config )
+            .then((res) => {
+                this.setState({
+                    duties: res.data.data.dutys,
+                })
+            })
+            .catch((err) => {
+                console.log("AXIOS ERROR: ", err);
+                return;
+            })
         };
     }
 
     phoneChangeHandler = (event) => {
         this.setState({
-            userinfo: {
-                ...this.state.userinfo,
-                user: {
-                    ...this.state.userinfo.user,
-                    pnumber: event.target.value,
-                }
-            }
-        })
-        console.log(this.state);
+            phone: event.target.value.trim(),
+        });
     }
 
     pwdChangeHandler = (event) => {
         this.setState({
-            pwd: event.target.value,
+            pwd: event.target.value.trim(),
+        })
+    }
+
+    curpwdChangeHandler = (event) => {
+        this.setState({
+            curpwd: event.target.value.trim(),
         })
     }
 
     conpwdChangeHandler = (event) => {
         this.setState({
-            cpwd: event.target.value,
+            cpwd: event.target.value.trim(),
         })
     }
 
@@ -80,13 +114,110 @@ class Profile extends Component {
       }
 
     submitHandler= (event) =>{
-        const password = this.state.pwd;
-        const confwd = this.state.cpwd;
-        console.log('您两次输入的密码不匹配哦');
-        if( password !== confwd){
-            alert('您两次输入的密码不匹配哦！');
-            this.props.history.push('/Portal/Profile');
+        event.preventDefault();
+        let phoneData = new FormData();
+        let pwdData = new FormData();
+
+        if(this.state.pwd || this.state.cpwd){
+            if(!this.state.curpwd){
+                alert('请输入当前密码');
+                return;
+            }
+            const password = this.state.pwd;
+            const confwd = this.state.cpwd;
+            if( password !== confwd){
+                alert('您两次输入的密码不匹配。');
+                return;
+            }
+
+            pwdData.append('pwd', this.state.curpwd);
+            pwdData.append('npwd', this.state.pwd);
+            pwdData.append('sid', this.state.userinfo.user.sid);
+
         }
+
+        if(this.state.phone){
+            if(this.state.phone[0] !== '1' || this.state.phone.length !== 11){
+                alert('您的手机号码格式不正确。');
+                return;
+            }
+            
+            phoneData.append('pnumber',this.state.phone);
+            phoneData.append('gender',this.state.isChecked);
+            
+        }
+
+
+        let config = {
+            headers: {
+                'token': this.state.userinfo.token,
+                'Content-Type': 'application/x-www-form-urlencoded',
+            }
+        }
+
+
+        if(this.state.phone){
+            axios.put('/api/user', phoneData, config)
+            .then((res) => {
+                console.log("phoneData: ", res);
+                if(res.data.status === 200){
+                    alert('资料修改成功。');
+                }
+            })
+            .catch((err) => {
+                console.log("AXIOS ERROR: ", err);
+                return;
+            })
+        }
+
+        if(this.state.pwd){
+            axios.put('/api/login', pwdData, config)
+            .then((res) => {
+                console.log("pwdData: ", res);
+                if(res.data.status === 200){
+                    alert('密码修改成功。')
+                }
+
+                else{
+                    alert(res.data.msg);
+                }
+            })
+            .catch((err) => {
+                console.log("AXIOS ERROR: ", err);
+                return;
+            })
+        }
+
+        if(!this.state.pwd && !this.state.phone){
+            let data = new FormData();
+            data.append('gender', this.state.isChecked);
+
+            axios.put('/api/user', data, config)
+            .then((res) => {
+                console.log("data: ", res);
+                if(res.data.status === 200){
+                    alert('性别修改成功。')
+                }
+            })
+            .catch((err) => {
+                console.log("AXIOS ERROR: ", err);
+                return;
+            })
+        }
+    }
+
+    handleClose = () => {
+        this.setState({
+            show: false,
+        })
+            
+
+    }
+
+    handleShow = () => {
+        this.setState({
+            show: true,
+        })
     }
     
     render(){
@@ -156,7 +287,7 @@ class Profile extends Component {
 
                     <Row>
                     <Form.Group as={Col} controlId="formPhone">
-                        <Form.Label>电话</Form.Label>
+                        <Form.Label>手机号码（仅限中国大陆）</Form.Label>
                         <Form.Control placeholder={phone} onChange={(event) => this.phoneChangeHandler(event)} />
                         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                     </Form.Group>
@@ -194,8 +325,8 @@ class Profile extends Component {
                         </Form.Group>
 
                         <Form.Group as={Col} controlId="formGroup">
-                            <Form.Label>分组</Form.Label>
-                            <Form.Control placeholder={grp} disabled />
+                            <Form.Label>分组<em onClick={this.handleShow}>[查看详情]</em></Form.Label>
+                            <Form.Control placeholder={grp} disabled onClick={this.handleShow} />
                         </Form.Group>
                     </Form.Row>
 
@@ -208,7 +339,10 @@ class Profile extends Component {
 
                     
                     <Form.Row>
-                    
+                    <Form.Group as={Col} controlId="formCurPwd">
+                            <Form.Label>当前密码</Form.Label>
+                            <Form.Control type="password" placeholder="当前密码" onChange = {(event)=>this.curpwdChangeHandler(event)} />
+                        </Form.Group>
                     </Form.Row>
                     
                     <Form.Row>
@@ -228,6 +362,21 @@ class Profile extends Component {
                         </Button>
                     </div>
                 </Form>
+
+                <Modal size = 'lg' show = {this.state.show} onHide = {this.handleClose}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>分组信息</Modal.Title>
+                    </Modal.Header>
+                        <Modal.Body>
+                            <SingleDutyDay SDM = {this.state.SDM} duties = {this.state.duties} />
+                        </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick = {this.handleClose}>
+                            关闭
+                        </Button>
+
+                    </Modal.Footer>
+                </Modal>
 
 
                 
