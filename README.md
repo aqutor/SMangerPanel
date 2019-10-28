@@ -1,5 +1,5 @@
 # SMangerPanel
-1. The profile page, login page has so far accompished.
+1. The profile page, login page has so far been accompished.
 2. More pages are under construction.
 
 # Requirements
