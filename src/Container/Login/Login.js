@@ -144,7 +144,7 @@ class Login extends Component {
         if(this.state.valAlert.type === 'success'){
             redirect = <Redirect to={{
                 pathname: '/Portal',
-                state: { userInfo: this.state.info.data }
+                state: { userinfo: this.state.info.data }
             }} />;
         }
         

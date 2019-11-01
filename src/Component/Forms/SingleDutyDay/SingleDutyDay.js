@@ -7,7 +7,7 @@ const SingleDutyDay = (props) => {
     
     let same_date_member_items = props.SDM.map( d => {
         return (
-            <tr>
+            <tr  key = {d.sid}>
                 <td>{d.sid}</td>
                 <td>{d.sname}</td>
                 <td>{d.pnumber}</td>
@@ -19,7 +19,7 @@ const SingleDutyDay = (props) => {
 
     let duties_items = props.duties.map( d => {
         return (
-            <tr>
+            <tr key={d.ddate}>
                 <td>{d.dgroup}</td>
                 <td>{d.dweek}</td>
                 <td>{d.ddate}</td>

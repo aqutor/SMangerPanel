@@ -42,16 +42,6 @@ class Profile extends Component {
             .then((res) => {
                 this.setState({
                     SDM: res.data.data.same_date_member,
-                })
-            })
-            .catch((err) => {
-                console.log("AXIOS ERROR: ", err);
-                return;
-            })
-
-            axios.get('/api/duty/search', config )
-            .then((res) => {
-                this.setState({
                     duties: res.data.data.dutys,
                 })
             })
@@ -59,6 +49,17 @@ class Profile extends Component {
                 console.log("AXIOS ERROR: ", err);
                 return;
             })
+
+            // axios.get('/api/duty/search', config )
+            // .then((res) => {
+            //     this.setState({
+            //         duties: res.data.data.dutys,
+            //     })
+            // })
+            // .catch((err) => {
+            //     console.log("AXIOS ERROR: ", err);
+            //     return;
+            // })
         };
     }
 
@@ -374,7 +375,6 @@ class Profile extends Component {
                         <Button variant="secondary" onClick = {this.handleClose}>
                             关闭
                         </Button>
-
                     </Modal.Footer>
                 </Modal>
 

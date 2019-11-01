@@ -1,67 +1,56 @@
+import { withRouter, NavLink } from 'react-router-dom';
 import React, { Component } from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './Portal.css';
-import profileimg from '../../assets/img/profile.svg';
-import adminimg from '../../assets/img/hierarchical_structure.svg';
-import { withRouter, NavLink } from 'react-router-dom';
+import './Admin.css';
+import membersimg from '../../../assets/img/members.svg';
 
-class Portal extends Component{
+class Admin extends Component {
     state = {
         userinfo: null,        
     };
     
     componentDidMount(){
-        console.log(this.props);
         if(this.props.location.state){
             this.setState({
                 userinfo: this.props.location.state.userinfo,
-            }
-            )
+            });
         };
+        console.log(this.state);
     }
 
-
-        
-
     render(){
-        let name = 'loading';
-        if(this.state.userinfo){
-            name = this.state.userinfo.user.sname;
-        }
-        return(
+        console.log(this.state);
 
+        return(
             <React.Fragment>
-                <br />
-                <h1>你好，{name}。</h1>
+                <h1>管理员面板</h1>
                 <br />
 
                 <section className = 'RoleSelect'>
                     <Card style={{ width: '18rem',}}>
-                        <Card.Img variant="top" src={profileimg} width={71} height={95} top='400px' style={{ marginTop: '1em' }} />
+                        <Card.Img variant="top" src={membersimg} width={71} height={95} top='400px' style={{ marginTop: '1em' }} />
                         <Card.Body>
                             <NavLink to={{
-                                pathname: '/Portal/Profile',
+                                pathname: '/Portal/Admin/Members',
                                 state: { userinfo: this.state.userinfo },
-                            }}><Button variant="primary">个人信息</Button></NavLink>
+                            }}><Button variant="primary">队员信息</Button></NavLink>
                         </Card.Body>
                     </Card>
                     <Card style={{ width: '18rem',  }}>
-                        <Card.Img variant="top" src={adminimg} width={71} height={95} top='400px' style={{ marginTop: '1em' }} />
+                        <Card.Img variant="top" src={membersimg} width={71} height={95} top='400px' style={{ marginTop: '1em' }} />
                         <Card.Body>
                             <NavLink to={{
-                                pathname: '/Portal/Admin',
+                                pathname: '/Portal/Admin/Members',
                                 state: { userinfo: this.state.userinfo },
                             }}><Button variant="primary">管理员面板</Button></NavLink>
                         </Card.Body>
                     </Card>
                 </section>
-                
             </React.Fragment>
-            
         )
     }
 }
 
-export default withRouter(Portal);
+export default withRouter(Admin);
