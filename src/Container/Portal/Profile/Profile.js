@@ -23,8 +23,10 @@ class Profile extends Component {
         console.log(this.props);
         if(this.props.location.state){
             let gender = true;
-            if(this.props.location.state.userinfo.gender === '女'){
+            if(this.props.location.state.userinfo.user.gender === '女'){
                 gender = false;
+
+                
             }
             this.setState({
                 userinfo: this.props.location.state.userinfo,
@@ -88,7 +90,7 @@ class Profile extends Component {
     }
 
     toggleChangeHandler = () => {
-        if((this.state.userinfo.user.gender === "女" && this.state.isChecked === false) || this.state.isChecked === null){
+        if(this.state.userinfo.user.gender === "女" && (this.state.isChecked === false)){
             this.setState({
                 isChecked: true,
                 userinfo: {
@@ -100,7 +102,7 @@ class Profile extends Component {
                 }
             })
         }
-        else if(this.state.userinfo.user.gender === "男" && this.state.isChecked === true){
+        else if(this.state.userinfo.user.gender === "男" && (this.state.isChecked === true)){
             this.setState({
                 isChecked: false,
                 userinfo: {
