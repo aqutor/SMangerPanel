@@ -87,7 +87,7 @@ class Members extends Component {
         this.setState({
             active: {
                 ...this.state.active,
-                pnumber: event.target.value,
+                pnumber: event.target.value.trim(),
             }
         })
     }
@@ -108,6 +108,31 @@ class Members extends Component {
         
     }
 
+    deleteHandler = () => {
+        if(this.state.active){
+            axios.delete('/api/member/manage', {
+                params: {
+                    sid: this.state.active.sid
+                },
+                headers: {
+                    'token': this.props.location.state.userinfo.token,
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                }
+              } )
+            .then((res) => {
+                console.log(res);
+                alert(res.data.msg);
+                this.setState({
+                    show: false,
+                })
+            })
+            .catch((err) => {
+                console.log("AXIOS ERROR: ", err);
+                return;
+            })
+        }
+    }
+
     groupChangeHandler = (event) => {
         this.setState({
             active: {
@@ -122,36 +147,90 @@ class Members extends Component {
         this.setState({
             active: {
                 ...this.state.active,
-                stuclass: event.target.value,
+                stuclass: event.target.value.trim(),
             }
         })
         
     }
-
-
-
-    submitHandler = () => {
-
+    
+    toggleChangeHandler = (event) => {
+        if(event.target.value === '男'){
+            this.setState({
+                isChecked: true,
+                active: {
+                    ...this.state.active,
+                    gender: '男',
+                }
+            })
+        }
+        else{
+            this.setState({
+                isChecked: false,
+                active: {
+                    ...this.state.active,
+                    gender: '女',
+                }
+            })
+        }
     }
 
-    componentDidUpdate(){
-        if(this.state.active){
-            if(this.state.active.gender === '女' && (this.state.isChecked === true || this.state.isChecked === null)){
-                this.setState({
-                    isChecked: false,
-                })
+
+
+    submitHandler = (event) => {
+        event.preventDefault();
+        let upData = new FormData();
+
+
+        if(this.state.active.pnumber){
+            if(this.state.active.pnumber[0] !== '1' || this.state.active.pnumber.length !== 11){
+                alert('您的手机号码格式不正确。');
+                return;
             }
-            else if(this.state.active.gender === '男' && (this.state.isChecked === false || this.state.isChecked === null)){
-                this.setState({
-                    isChecked: true,
-                })  
+            upData.append('pnumber',this.state.active.pnumber);
+        }
+
+        upData.append('sid',this.state.active.sid);
+
+        if(this.state.activeNote){
+            upData.append('note',this.state.activeNote);
+        }
+
+        upData.append('mposition',this.state.active.mposition);
+        if(this.state.active.dgroup !== ''){
+            upData.append('dgroup',this.state.active.dgroup);
+        }
+        upData.append('stuclass',this.state.active.stuclass);
+
+
+
+
+        let config = {
+            headers: {
+                'token': this.state.userinfo.token,
+                'Content-Type': 'application/x-www-form-urlencoded',
             }
         }
 
-        if(this.state.active){
-            
-        }
+
+
+            axios.put('/api/member/manage', upData, config)
+            .then((res) => {
+                console.log("upData: ", res);
+                if(res.data.status === 200){
+                    alert('资料修改成功。');
+                }
+                else{
+                    alert(res.data.msg);
+                }
+            })
+            .catch((err) => {
+                console.log("AXIOS ERROR: ", err);
+                return;
+            })
+
+
     }
+
 
     render(){
         let memberIters = null;
@@ -171,6 +250,13 @@ class Members extends Component {
             } ) 
         }
 
+        let buttonMargin = {
+            marginLeft: '0.25em',
+            marginRight: '0.25em',
+        };
+
+
+
         
 
         let formModal = null;
@@ -188,8 +274,6 @@ class Members extends Component {
                                     <Form.Label>姓名</Form.Label>
                                     <Form.Control disabled value = {this.state.active.sname} />
                                     </Form.Group>
-
-                                    
                                 </Form.Row>
 
                                 <Row>
@@ -199,30 +283,7 @@ class Members extends Component {
                                     <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                 </Form.Group>
 
-                                <Form.Group as={Col} sm id="formGender">
-                                    <Form.Label>性别</Form.Label>
-                                    <fieldset>
-                                    <Row>
-                                        <Form.Check
-                                        type="radio"
-                                        label="男"
-                                        name="radioMale"
-                                        id="radioMale"
-                                        checked={this.state.isChecked}
-                                        onChange={this.toggleChangeHandler}
-                                        />
-                                        <Form.Check
-                                        type="radio"
-                                        label="女"
-                                        name="radioFemale"
-                                        id="radioFemale"
-                                        checked={!this.state.isChecked}
-                                        onChange={this.toggleChangeHandler}
-                                        />
-                                    </Row>
-                                    </fieldset>
-
-                                </Form.Group>
+                                
                                 </Row>
 
                                 <Form.Row>
@@ -270,11 +331,15 @@ class Members extends Component {
 
                                 
                                 <div className = 'col text-center'>
-                                    <Button className='memberButton' variant="primary" type="submit">
+                                    <Button style = {buttonMargin} variant="primary" type="submit">
                                      提交 
                                     </Button>
 
-                                    <Button variant="secondary" onClick = {this.handleClose}>
+                                    <Button variant="danger" style = {buttonMargin} onClick = {this.deleteHandler}>
+                                     删除用户 
+                                    </Button>
+
+                                    <Button variant="secondary" style = {buttonMargin} onClick = {this.handleClose}>
                                      关闭 
                                     </Button>
                                 </div>

@@ -89,30 +89,42 @@ class Profile extends Component {
         })
     }
 
-    toggleChangeHandler = () => {
-        if(this.state.userinfo.user.gender === "女" && (this.state.isChecked === false)){
+    toggleChangeHandler = (event) => {
+        if(event.target.value === '男'){
             this.setState({
                 isChecked: true,
-                userinfo: {
-                    ...this.state.userinfo,
-                    user: {
-                        ...this.state.userinfo.user,
-                        gender: '男',
-                    }
-                }
             })
         }
-        else if(this.state.userinfo.user.gender === "男" && (this.state.isChecked === true)){
+        else{
             this.setState({
                 isChecked: false,
-                userinfo: {
-                    ...this.state.userinfo,
-                    user: {...this.state.userinfo.user,
-                        gender: '女',
-                    }
-                }
             })
         }
+        // if(this.state.userinfo.user.gender === "女" && (this.state.isChecked === false)){
+        //     this.setState({
+        //         isChecked: true,
+        //         userinfo: {
+        //             ...this.state.userinfo,
+        //             user: {
+        //                 ...this.state.userinfo.user,
+        //                 gender: '男',
+        //             }
+        //         }
+        //     })
+        // }
+        // else if(this.state.userinfo.user.gender === "男" && (this.state.isChecked === true)){
+        //     this.setState({
+        //         isChecked: false,
+        //         userinfo: {
+        //             ...this.state.userinfo,
+        //             user: {...this.state.userinfo.user,
+        //                 gender: '女',
+        //             }
+        //         }
+        //     })
+        // }
+
+
         console.log(this.state);
       }
 
@@ -224,6 +236,7 @@ class Profile extends Component {
     }
     
     render(){
+        
         console.log(this.state);
         let redirect = null;
         if(!this.props.location.state){
@@ -232,42 +245,25 @@ class Profile extends Component {
             }} />;
         }
 
-        let sid = 'null';
+        let sid = null;
+        let phone = null;
+        let sclass = null;
+        let pos = null;
+        let grp = '未分组';
+        let name = null;
 
         if(this.state.userinfo){
             sid=this.state.userinfo.user.sid;
-        }
-
-        let phone = null;
-        if(this.state.userinfo){
             phone = this.state.userinfo.user.pnumber;
-        }
-
-        let sclass = 'null';
-        if(this.state.userinfo){
             sclass = this.state.userinfo.user.stuclass;
-        }
-
-        let pos = 'null';
-        if(this.state.userinfo){
             pos = this.state.userinfo.user.mposition;
-        }
-
-        let grp = '未分组';
-        if(this.state.userinfo){
             grp = this.state.userinfo.user.dgroup;
+            name = this.state.userinfo.user.sname;
             if(this.state.userinfo.user.dgroup === null){
                 grp = '未分组';
             }
         }
 
-        let name = 'null';
-        if(this.state.userinfo){
-            name = this.state.userinfo.user.sname;
-        }
-
-        
-        
         console.log(this.props)
         return(
             <React.Fragment>
@@ -295,25 +291,25 @@ class Profile extends Component {
                         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                     </Form.Group>
 
-                    <Form.Group as={Col} sm id="formGender">
+                    <Form.Group as={Col} sm id="formGender" onChange={this.toggleChangeHandler}>
                         <Form.Label>性别</Form.Label>
                         <fieldset>
                         <Row>
                             <Form.Check
                             type="radio"
                             label="男"
-                            name="radioMale"
+                            value="男"
+                            name="gender"
                             id="radioMale"
                             checked={this.state.isChecked}
-                            onChange={this.toggleChangeHandler}
                             />
                             <Form.Check
                             type="radio"
                             label="女"
-                            name="radioFemale"
+                            value="女"
+                            name="gender"
                             id="radioFemale"
                             checked={!this.state.isChecked}
-                            onChange={this.toggleChangeHandler}
                             />
                         </Row>
                         </fieldset>
