@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Admin.css';
 import membersimg from '../../../assets/img/members.svg';
+import studentsimg from '../../../assets/img/students.svg'
 
 class Admin extends Component {
     state = {
@@ -39,12 +40,12 @@ class Admin extends Component {
                         </Card.Body>
                     </Card>
                     <Card style={{ width: '18rem',  }}>
-                        <Card.Img variant="top" src={membersimg} width={71} height={95} top='400px' style={{ marginTop: '1em' }} />
+                        <Card.Img variant="top" src={studentsimg} width={71} height={95} top='400px' style={{ marginTop: '1em' }} />
                         <Card.Body>
                             <NavLink to={{
-                                pathname: '/Portal/Admin/Members',
+                                pathname: '/Portal/Admin/Students/1',
                                 state: { userinfo: this.state.userinfo },
-                            }}><Button variant="primary">管理员面板</Button></NavLink>
+                            }}><Button variant="primary">学生信息</Button></NavLink>
                         </Card.Body>
                     </Card>
                 </section>

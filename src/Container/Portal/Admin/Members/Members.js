@@ -12,7 +12,7 @@ class Members extends Component {
         show: false,
         isChecked: null,
         activeNote: null,
-                
+
     };
     
     componentDidMount(){
@@ -37,6 +37,7 @@ class Members extends Component {
                 console.log(res);
                 this.setState({
                     members: res.data.data.members,
+                    totol: res.data.data.totol,
                 })
             })
             .catch((err) => {
@@ -233,9 +234,9 @@ class Members extends Component {
 
 
     render(){
-        let memberIters = null;
+        let memberItems = null;
         if(this.state.members){
-            memberIters = this.state.members.map( d => {
+            memberItems = this.state.members.map( d => {
                 return (
                     <tr key={d.sid} onClick={() => this.handleShow(d)} > 
                         <td>{d.sid}</td>
@@ -257,7 +258,6 @@ class Members extends Component {
 
 
 
-        
 
         let formModal = null;
 
@@ -280,7 +280,6 @@ class Members extends Component {
                                 <Form.Group as={Col} controlId="formPhone">
                                     <Form.Label>手机号码（仅限中国大陆）</Form.Label>
                                     <Form.Control value = {this.state.active.pnumber} onChange={(event) => this.phoneChangeHandler(event)} />
-                                    <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                                 </Form.Group>
 
                                 
@@ -366,7 +365,7 @@ class Members extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {memberIters}
+                        {memberItems}
                     </tbody>
                 </Table>
 
