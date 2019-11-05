@@ -19,7 +19,7 @@ Steps to reproduce the behaviour / 描述产生问题的步骤:
 3. Scroll down to '....' 
 4. See error / 报错
 
-**Expected Behaviour / 正常结果 **
+**Expected Behaviour / 正常结果**
 A clear and concise description of what you expected to happen. / 如果没有问题，你认为正常应该返回什么结果。
 
 **Screenshots / 截图**
