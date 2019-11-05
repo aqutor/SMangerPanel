@@ -25,7 +25,7 @@ A clear and concise description of what you expected to happen. / 如果没有�
 **Screenshots / 截图**
 If applicable, add screenshots to help explain your problem. / 可提供控制台中报错的截图以及其他截图。
 
-**Only Compatible With The Chromium-based Browsers | 仅支持谷歌浏览器内核**
+**Only Compatible With The Chromium-based Browsers / 仅支持基于谷歌内核的浏览器**
 
 **Additional context / 附加信息**
 Add any other context about the problem here. / 其他可能帮助解决问题的信息。
