@@ -153,29 +153,6 @@ class Members extends Component {
         })
         
     }
-    
-    toggleChangeHandler = (event) => {
-        if(event.target.value === '男'){
-            this.setState({
-                isChecked: true,
-                active: {
-                    ...this.state.active,
-                    gender: '男',
-                }
-            })
-        }
-        else{
-            this.setState({
-                isChecked: false,
-                active: {
-                    ...this.state.active,
-                    gender: '女',
-                }
-            })
-        }
-    }
-
-
 
     submitHandler = (event) => {
         event.preventDefault();

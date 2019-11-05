@@ -65,6 +65,8 @@ class Profile extends Component {
         };
     }
 
+    
+
     phoneChangeHandler = (event) => {
         this.setState({
             phone: event.target.value.trim(),
