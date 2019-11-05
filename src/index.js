@@ -5,8 +5,8 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import axios from 'axios';
 
-//axios.defaults.baseURL = 'https://smp-api.cloud.airscr.com';
-axios.defaults.baseURL = 'http://47.101.152.57:5000';
+axios.defaults.baseURL = 'https://smp-api.cloud.airscr.com';
+//axios.defaults.baseURL = 'http://47.101.152.57:5000';
 ReactDOM.render(<App />, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change

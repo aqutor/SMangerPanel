@@ -106,7 +106,7 @@ class Login extends Component {
             this.setState({
                 valAlert: {
                     type: 'danger',
-                    msg: 'hey, u\'d better check your info again. Note: This notice will not be included in the final version.'
+                    msg: '用户名或密码输入错误，请重试。'
                 }
             })            
         }
@@ -115,7 +115,7 @@ class Login extends Component {
             this.setState({
                 valAlert: {
                     type: 'danger',
-                    msg: 'hey, u\'d better check your info again. Note: This notice will not be included in the final version.'
+                    msg: '用户名或密码输入错误，请重试。'
                 }
             }) 
         }
@@ -153,9 +153,12 @@ class Login extends Component {
             
             <div >
                 {redirect}
-                <Alert className = 'InFormAlert' variant = 'warning' id = 'alertConstuction'> The site is still under constuction.<br></br> <strong>Note</strong>: Now user credentials can be validated on this <em>single page</em>. If the credentials are correct, the button text would not be modified which is set on purpose. For the final version, the page will be redirected to the next page.</Alert>
-                <Alert className = 'InFormAlert' variant = 'info' id = 'alertBrowser'> Internet Explorer is unsupported. For better performance, the Chromium-based browsers are recommended.</Alert>
-                
+                <Alert className = 'InFormAlert' variant = 'warning' id = 'alertConstuction'>
+                    <strong>注意</strong>: 您可通过页脚的提交问题（点击 "Get started"）反馈遇到的问题。不一定按照模版填写。<br />
+                    手签页面尚未完成。
+                    </Alert>
+                <Alert className = 'InFormAlert' variant = 'info' id = 'alertBrowser'> Internet Explorer 不受支持，请使用基于 Chromium 内核的浏览器。</Alert>
+                <Alert variant = {this.state.valAlert.type} className = 'InFormAlert' id='pwdAlertInfo' > {this.state.valAlert.msg}</Alert>
                 <Form className='LoginForm'>
                     <Form.Group controlId="formBasicEmail">
                         <h1>登录 - 晨跑管理系统</h1>
@@ -173,7 +176,7 @@ class Login extends Component {
                             忘记密码?
                         </Form.Text>
                 </Form>
-                <Alert variant = {this.state.valAlert.type} className = 'InFormAlert' id='pwdAlertInfo' > {this.state.valAlert.msg}</Alert>
+                
             </div>
         )
     }
