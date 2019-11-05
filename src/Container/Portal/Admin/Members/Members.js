@@ -12,6 +12,8 @@ class Members extends Component {
         show: false,
         isChecked: null,
         activeNote: null,
+        showAdd: false,
+        addSID: null,
 
     };
     
@@ -154,6 +156,50 @@ class Members extends Component {
         
     }
 
+    addSIDHandler = (event) => {
+        this.setState({
+            addSID: event.target.value,
+        })
+    }
+
+    handleCloseAdd = () => {
+        this.setState({
+            showAdd: false,
+        })
+    }
+
+    handleShowAdd = () => {
+        this.setState({
+            showAdd: true,
+        })
+    }
+
+    addSubmitHandler = (event) => {
+        event.preventDefault();
+
+        let upData = new FormData();
+        upData.append('sid', this.state.addSID);
+
+        let config = {
+            headers: {
+                'token': this.state.userinfo.token,
+                'Content-Type': 'application/x-www-form-urlencoded',
+            }
+        }
+
+        axios.post('/api/member/manage', upData, config)
+        .then((res) => {
+            console.log("upData: ", res);
+            alert(res.data.msg);
+        })
+        .catch((err) => {
+            alert('操作出错，请稍后再试或联系系统管理员。');
+            console.log("AXIOS ERROR: ", err);
+            return;
+        })
+        
+    }
+
     submitHandler = (event) => {
         event.preventDefault();
         let upData = new FormData();
@@ -172,15 +218,17 @@ class Members extends Component {
         if(this.state.activeNote){
             upData.append('note',this.state.activeNote);
         }
+        if (this.state.active.sid !== '201710311101' && this.state.active.mposition === '队长'){
+            alert('不能分配其他用户队长权限');
+            return;
+        }
 
         upData.append('mposition',this.state.active.mposition);
+
         if(this.state.active.dgroup !== ''){
             upData.append('dgroup',this.state.active.dgroup);
         }
         upData.append('stuclass',this.state.active.stuclass);
-
-
-
 
         let config = {
             headers: {
@@ -189,22 +237,20 @@ class Members extends Component {
             }
         }
 
-
-
-            axios.put('/api/member/manage', upData, config)
-            .then((res) => {
-                console.log("upData: ", res);
-                if(res.data.status === 200){
-                    alert('资料修改成功。');
-                }
-                else{
-                    alert(res.data.msg);
-                }
-            })
-            .catch((err) => {
-                console.log("AXIOS ERROR: ", err);
-                return;
-            })
+        axios.put('/api/member/manage', upData, config)
+        .then((res) => {
+            console.log("upData: ", res);
+            if(res.data.status === 200){
+                alert('资料修改成功。');
+            }
+            else{
+                alert(res.data.msg);
+            }
+        })
+        .catch((err) => {
+            console.log("AXIOS ERROR: ", err);
+            return;
+        })
 
 
     }
@@ -329,6 +375,7 @@ class Members extends Component {
             <React.Fragment>
                 <h1>队员信息管理</h1>
                 <br />
+                <Button style={{marginLeft: '2em',}} variant="outline-info" onClick = {this.handleShowAdd} >添加队员</Button>
                 <Table responsive striped>
                     <thead>
                         <tr>
@@ -352,6 +399,35 @@ class Members extends Component {
                     </Modal.Header>
                         <Modal.Body>
                             {formModal}
+                        </Modal.Body>
+                    <Modal.Footer>
+                        
+                    </Modal.Footer>
+                </Modal>
+
+                <Modal size = 'lg' show = {this.state.showAdd} onHide = {this.handleCloseAdd}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>添加队员</Modal.Title>
+                    </Modal.Header>
+                        <Modal.Body>
+                            <Form onSubmit={this.addSubmitHandler}>
+                                <Form.Row>
+                                    <Form.Group as={Col} controlId="formSID">
+                                    <Form.Label >用户名</Form.Label>
+                                    <Form.Control value = {this.state.addSID} onChange = {(event) => this.addSIDHandler(event)} />
+                                    </Form.Group>
+                                </Form.Row>
+
+                                <div className = 'col text-center'>
+                                    <Button style = {buttonMargin} variant="primary" type="submit">
+                                     提交 
+                                    </Button>
+
+                                    <Button variant="secondary" style = {buttonMargin} onClick = {this.handleCloseAdd}>
+                                     关闭 
+                                    </Button>
+                                </div>
+                        </Form>
                         </Modal.Body>
                     <Modal.Footer>
                         

@@ -60,6 +60,18 @@ class StudentInfo extends Component {
 
     // handle add modal
 
+    handleCloseAdd = () => {
+        this.setState({
+            showAdd: false,
+        })
+    }
+
+    handleShowAdd = () => {
+        this.setState({
+            showAdd: true,
+        })
+    }
+
     addSIDHandler = (event) => {
         this.setState({
             adduser: {
@@ -140,18 +152,16 @@ class StudentInfo extends Component {
             }
         }
 
-
-
-            axios.post('/api/student/manage', upData, config)
-            .then((res) => {
-                console.log("upData: ", res);
-                alert(res.data.msg);
-            })
-            .catch((err) => {
-                alert('操作出错，请稍后再试或联系系统管理员。');
-                console.log("AXIOS ERROR: ", err);
-                return;
-            })
+        axios.post('/api/student/manage', upData, config)
+        .then((res) => {
+            console.log("upData: ", res);
+            alert(res.data.msg);
+        })
+        .catch((err) => {
+            alert('操作出错，请稍后再试或联系系统管理员。');
+            console.log("AXIOS ERROR: ", err);
+            return;
+        })
     }
 
     // end of handle add modal
@@ -228,17 +238,7 @@ class StudentInfo extends Component {
         })
     }
 
-    handleCloseAdd = () => {
-        this.setState({
-            showAdd: false,
-        })
-    }
-
-    handleShowAdd = () => {
-        this.setState({
-            showAdd: true,
-        })
-    }
+    
 
     pagHandler( i ) {
         this.props.history.push({
