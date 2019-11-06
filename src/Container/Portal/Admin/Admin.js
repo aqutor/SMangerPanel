@@ -6,7 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './Admin.css';
 import membersimg from '../../../assets/img/members.svg';
 import studentsimg from '../../../assets/img/students.svg'
-
+import shieldimg from '../../../assets/img/shield.svg'
 class Admin extends Component {
     state = {
         userinfo: null,        
@@ -30,7 +30,7 @@ class Admin extends Component {
                 <br />
 
                 <section className = 'RoleSelect'>
-                    <Card style={{ width: '18rem',}}>
+                    <Card style={{ width: '17rem',}}>
                         <Card.Img variant="top" src={membersimg} width={71} height={95} top='400px' style={{ marginTop: '1em' }} />
                         <Card.Body>
                             <NavLink to={{
@@ -39,13 +39,22 @@ class Admin extends Component {
                             }}><Button variant="primary">队员信息</Button></NavLink>
                         </Card.Body>
                     </Card>
-                    <Card style={{ width: '18rem',  }}>
+                    <Card style={{ width: '17rem',  }}>
                         <Card.Img variant="top" src={studentsimg} width={71} height={95} top='400px' style={{ marginTop: '1em' }} />
                         <Card.Body>
                             <NavLink to={{
                                 pathname: '/Portal/Admin/Students/1',
                                 state: { userinfo: this.state.userinfo },
                             }}><Button variant="primary">学生信息</Button></NavLink>
+                        </Card.Body>
+                    </Card>
+                    <Card style={{ width: '17rem',  }}>
+                        <Card.Img variant="top" src={shieldimg} width={71} height={95} top='400px' style={{ marginTop: '1em' }} />
+                        <Card.Body>
+                            <NavLink to={{
+                                pathname: '/Portal/Admin/Password',
+                                state: { userinfo: this.state.userinfo },
+                            }}><Button variant="primary">密码管理</Button></NavLink>
                         </Card.Body>
                     </Card>
                 </section>

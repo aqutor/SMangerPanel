@@ -155,7 +155,7 @@ class Login extends Component {
                 {redirect}
                 <Alert className = 'InFormAlert' variant = 'warning' id = 'alertConstuction'>
                     <strong>注意</strong>: 您可通过页脚的提交问题（点击 "Get started"）反馈遇到的问题。不一定按照模版填写。<br />
-                    手签页面尚未完成。
+                    <strong>密码找回/管理功能尚未完成。</strong>
                     </Alert>
                 <Alert className = 'InFormAlert' variant = 'info' id = 'alertBrowser'> Internet Explorer 不受支持，请使用基于 Chromium 内核的浏览器。</Alert>
                 <Alert variant = {this.state.valAlert.type} className = 'InFormAlert' id='pwdAlertInfo' > {this.state.valAlert.msg}</Alert>

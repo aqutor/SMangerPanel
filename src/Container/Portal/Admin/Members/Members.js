@@ -82,8 +82,6 @@ class Members extends Component {
             console.log("AXIOS ERROR: ", err);
             return;
         })
-        
-
     }
 
     phoneChangeHandler = (event) => {
@@ -279,9 +277,6 @@ class Members extends Component {
             marginRight: '0.25em',
         };
 
-
-
-
         let formModal = null;
 
         if(this.state.active){
@@ -375,7 +370,7 @@ class Members extends Component {
             <React.Fragment>
                 <h1>队员信息管理</h1>
                 <br />
-                <Button style={{marginLeft: '2em',}} variant="outline-info" onClick = {this.handleShowAdd} >添加队员</Button>
+                <Button style={{marginLeft: '2em',marginBottom: '1em'}} variant="outline-info" onClick = {this.handleShowAdd} >添加队员</Button>
                 <Table responsive striped>
                     <thead>
                         <tr>

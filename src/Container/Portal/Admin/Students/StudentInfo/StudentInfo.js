@@ -524,7 +524,7 @@ class StudentInfo extends Component {
         return(
             <React.Fragment>
                 <br />
-                <Button style={{marginLeft: '2em',}} variant="outline-info" onClick = {this.handleShowAdd} >添加学生</Button>
+                <Button style={{marginLeft: '2em', marginBottom: '1em'}} variant="outline-info" onClick = {this.handleShowAdd} >添加学生</Button>
                 <Table responsive striped>
                     <thead>
                         <tr>

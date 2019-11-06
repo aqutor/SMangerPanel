@@ -31,7 +31,7 @@ class Sign extends Component {
                         <Card.Img variant="top" src={addimg} width={71} height={95} top='400px' style={{ marginTop: '1em' }} />
                         <Card.Body>
                             <NavLink to={{
-                                pathname: '/Portal/Sign/View',
+                                pathname: '/Portal/Sign/Records',
                                 state: { userinfo: this.state.userinfo },
                             }}><Button variant="primary">查看记录</Button></NavLink>
                         </Card.Body>

@@ -11,7 +11,9 @@ import Admin from './Container/Portal/Admin/Admin';
 import Sign from './Container/Portal/Sign/Sign';
 import Members from './Container/Portal/Admin/Members/Members';
 import Students from './Container/Portal/Admin/Students/Students';
-import Add from './Container/Portal/Sign/Add/Add';
+import SignAdd from './Container/Portal/Sign/Add/Add';
+import SignRecords from './Container/Portal/Sign/Records/Records';
+
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -50,10 +52,11 @@ class App extends Component{
           <Route path='/Portal/Profile' exact component = {() => <Profile />} />
           <Route path='/Portal/DutyDay' exact component = {() => <DutyDay />} />
           <Route path='/Portal/Sign' exact component = {() => <Sign />} />
-          <Route path='/Portal/Sign/Add' exact component = {() => <Add />} />
+          <Route path='/Portal/Sign/Add' exact component = {() => <SignAdd />} />
           <Route path='/Portal/Admin' exact component = {() => <Admin />} />
           <Route path='/Portal/Admin/Members' exact component = {() => <Members />} />
           <Route path='/Portal/Admin/Students' component = {() => <Students />} />
+          <Route path='/Portal/Sign/Records' component = {() => <SignRecords />} />
           
         </Switch>
       </main>
