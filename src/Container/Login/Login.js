@@ -6,7 +6,8 @@ import './Login.css';
 import Alert from 'react-bootstrap/Alert';
 import axios from 'axios';
 import { Redirect } from 'react-router';
-import { withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 class Login extends Component {
 
@@ -172,9 +173,9 @@ class Login extends Component {
                             {this.state.SubmitText}
                         </Button>
                         <p></p>
-                        <Form.Text className="text-muted" >
+                        <NavLink to="/Forget"><Form.Text className="text-muted" >
                             忘记密码?
-                        </Form.Text>
+                        </Form.Text></NavLink>
                 </Form>
                 
             </div>

@@ -11,8 +11,11 @@ import Admin from './Container/Portal/Admin/Admin';
 import Sign from './Container/Portal/Sign/Sign';
 import Members from './Container/Portal/Admin/Members/Members';
 import Students from './Container/Portal/Admin/Students/Students';
+import Password from './Container/Portal/Admin/Password/Password';
 import SignAdd from './Container/Portal/Sign/Add/Add';
 import SignRecords from './Container/Portal/Sign/Records/Records';
+import Group from './Container/Portal/Group/Group';
+import Forget from './Container/Forget/Forget';
 
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -41,6 +44,7 @@ class App extends Component{
       <nav>
         <Switch>
           <Route path='/' exact component = {NavLogin} />
+          <Route path='/Forget' exact component = {NavLogin} />
           <Route path='/Portal' component = {NavPortal} />
         </Switch>
       </nav>
@@ -55,6 +59,9 @@ class App extends Component{
           <Route path='/Portal/Sign/Add' exact component = {() => <SignAdd />} />
           <Route path='/Portal/Admin' exact component = {() => <Admin />} />
           <Route path='/Portal/Admin/Members' exact component = {() => <Members />} />
+          <Route path='/Portal/Group' exact component = {() => <Group />} />
+          <Route path='/Forget' exact component = {() => <Forget />} />
+          <Route path='/Portal/Admin/Password' exact component = {() => <Password />} />
           <Route path='/Portal/Admin/Students' component = {() => <Students />} />
           <Route path='/Portal/Sign/Records' component = {() => <SignRecords />} />
           
