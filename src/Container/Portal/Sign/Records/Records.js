@@ -49,6 +49,7 @@ class Records extends Component {
             return;
         })
     }
+    
     componentDidUpdate(){
         console.log(this.state);
     }
