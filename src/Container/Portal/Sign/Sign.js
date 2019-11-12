@@ -2,7 +2,7 @@ import { withRouter, NavLink } from 'react-router-dom';
 import React, { Component } from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
-import addimg from '../../../assets/img/add.svg'
+import addimg from '../../../assets/img/eye.svg'
 import tapimg from '../../../assets/img/tap.svg'
 
 class Sign extends Component {
