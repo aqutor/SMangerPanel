@@ -247,8 +247,7 @@ class Password extends Component {
 
                     <Row>
                         <Form.Group as={Col} controlId="formDate">
-                            <Form.Label>审核状态</Form.Label>
-                            
+                            <Form.Label>审核状态</Form.Label>                   
                             <InputGroup>
                             <Form.Control value = {status} disabled />
                             {buttonControl}
@@ -256,16 +255,10 @@ class Password extends Component {
                         </Form.Group>
                         
                     </Row>
-
-                    
-
-                    
                     <div className = 'col text-center'>
-
                         <Button variant="danger" style = {buttonMargin} onClick = {this.deleteHandler}>
                          删除记录 
                         </Button>
-
                         <Button variant="secondary" style = {buttonMargin} onClick = {this.handleClose}>
                          关闭 
                         </Button>

@@ -14,7 +14,7 @@ class Students extends Component {
 
                 <h2 style = {{textAlign: 'center', paddingTop: '1em'}}>学生信息管理</h2>
                 
-                <Route path={this.props.match.url + '/:id'} exact component={StudentInfo} />
+                <Route path={this.props.match.url} exact component={StudentInfo} />
             </React.Fragment>
         )
     }

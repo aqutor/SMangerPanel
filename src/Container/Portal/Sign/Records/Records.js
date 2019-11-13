@@ -15,6 +15,7 @@ class Records extends Component {
         lastdate: null,
         sid: null,
         dsid: null,
+        active: null,
     };
 
     componentDidMount(){

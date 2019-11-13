@@ -1,9 +1,8 @@
 .Login{
-    width: 80%;
+    max-width: 700px;
 }
 
 .LoginForm {
-    width: 100%;
     max-width: 360px;
     padding: 15px;
     margin: auto;
@@ -15,7 +14,7 @@
 }
 
 .InFormAlert {
-    width: 70%;
+    max-width: 700px;
     text-align: center;
     margin: auto;
 }

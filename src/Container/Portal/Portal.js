@@ -6,7 +6,9 @@ import './Portal.css';
 import profileimg from '../../assets/img/profile.svg';
 import adminimg from '../../assets/img/hierarchical_structure.svg';
 import signimg from '../../assets/img/sign.svg';
+import targetimg from '../../assets/img/target.svg';
 import smartphoneimg from '../../assets/img/smartphone.svg';
+import violationimg from '../../assets/img/laptop.svg'
 import { withRouter, NavLink } from 'react-router-dom';
 
 class Portal extends Component{
@@ -76,6 +78,26 @@ class Portal extends Component{
                                 pathname: '/Portal/Group',
                                 state: { userinfo: this.state.userinfo },
                             }}><Button variant="primary">分组信息</Button></NavLink>
+                        </Card.Body>
+                    </Card>
+
+                    <Card style={{ width: '17rem', }}>
+                        <Card.Img variant="top" src={violationimg} width={71} height={95} top='400px' style={{ marginTop: '1em' }} />
+                        <Card.Body>
+                            <NavLink to={{
+                                pathname: '/Portal/Violation',
+                                state: { userinfo: this.state.userinfo },
+                            }}><Button variant="primary">违规管理</Button></NavLink>
+                        </Card.Body>
+                    </Card>
+
+                    <Card style={{ width: '17rem', }}>
+                        <Card.Img variant="top" src={targetimg} width={71} height={95} top='400px' style={{ marginTop: '1em' }} />
+                        <Card.Body>
+                            <NavLink to={{
+                                pathname: '/Portal/Teacher',
+                                state: { userinfo: this.state.userinfo },
+                            }}><Button variant="primary">教师值班</Button></NavLink>
                         </Card.Body>
                     </Card>
                 </section>

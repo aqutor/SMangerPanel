@@ -10,7 +10,7 @@ class Forget extends Component {
         sid: null,
         email: null,
         newpwd: null,
-        purl: null,
+        purl: 'https://o2.airscr.com/content/images/2019/11/sense-brian-cop_2.jpg',
         cnewpwd: null,
         showAlert: false,
         eventid: null,
@@ -66,12 +66,9 @@ class Forget extends Component {
         }
 
         // workaroud.
-        this.setState({
-            purl: 'https://o2.airscr.com/content/images/2019/11/sense-brian-cop_2.jpg'
-        });
 
         if(!this.state.purl){
-            alert('[开发中功能提示] 请再点一次提交。');
+            alert('请上传图片');
             return;
         }
 
@@ -148,7 +145,7 @@ class Forget extends Component {
                     <Form.Row>
                         <Form.Group as={Col} controlId="formPic">
                             <Form.Label>手持学生卡照片<div style = {{color: 'grey', fontSize: '12px'}}> 您的资料被将会严格保密且仅用作认证使用，您可在能够辨认的情况下加上水印上传。如果不放心此认证方式，请当面联系队长。</div></Form.Label>
-                            <Form.Control type="file" />
+                            <Form.Control type="file" accept="image/*" />
                         </Form.Group>
                     </Form.Row>
 

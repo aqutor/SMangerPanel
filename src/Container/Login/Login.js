@@ -156,7 +156,7 @@ class Login extends Component {
                 {redirect}
                 <Alert className = 'InFormAlert' variant = 'warning' id = 'alertConstuction'>
                     <strong>注意</strong>: 您可在登录 GitHub 的情况下通过页脚的提交问题（点击 "Get started"）反馈遇到的问题。不一定按照模版填写。<br />
-                    <strong>图片上传/页码</strong>尚不可用。<strong>违规功能/管理员初始化/教师相关</strong>功能还未添加。
+                    <strong>图片上传/页码</strong>尚不可用。所有 API 功能均已实现。
                     </Alert>
                 <Alert className = 'InFormAlert' variant = 'info' id = 'alertBrowser'> Internet Explorer 不受支持，请使用基于 Chromium 内核的浏览器。</Alert>
                 <Alert variant = {this.state.valAlert.type} className = 'InFormAlert' id='pwdAlertInfo' > {this.state.valAlert.msg}</Alert>

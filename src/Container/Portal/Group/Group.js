@@ -66,7 +66,7 @@ class Group extends Component {
         
         else if (this.state.isarranged){
             formInfo = (
-                <Table responsive striped style = {{width: '70%', margin: 'auto'}}>
+                <Table responsive striped style = {{maxWidth: '700px', margin: 'auto'}}>
                     <thead>
                         <tr>
                         <th>日期</th>

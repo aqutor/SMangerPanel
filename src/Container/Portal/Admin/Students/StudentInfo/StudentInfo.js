@@ -1,7 +1,7 @@
 import { withRouter } from 'react-router-dom';
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Table,  Modal, Button, Row, Form, Col, Pagination } from 'react-bootstrap';
+import { Table,  Modal, Button, Row, Form, Col } from 'react-bootstrap';
 
 
 class StudentInfo extends Component {
@@ -360,23 +360,6 @@ class StudentInfo extends Component {
 
         console.log(this.state);
         let formModal = null;
-        let items = [];
-        if(this.state.pagesize){  
-            for (let number = 1; number <= this.state.pagesize; number++) {
-                items.push(
-                <Pagination.Item key= {number} active = {number === this.state.pag} onClick={this.pagHandler.bind(this, number)} >
-                {number}
-                </Pagination.Item>,
-            );
-            }
-        }
-
-        const paginationBasic = (
-            <div>
-              <Pagination>{items}</Pagination>
-              <br />
-            </div>
-        );
         
         let formModalAdd = (
             <Form onSubmit={this.addSubmitHandler}>
@@ -542,7 +525,6 @@ class StudentInfo extends Component {
 
                 <br />
                 <p>分页功能暂未优化且不可用。</p>
-                {paginationBasic}
 
                 <Modal size = 'lg' show = {this.state.show} onHide = {this.handleClose}>
                     <Modal.Header closeButton>

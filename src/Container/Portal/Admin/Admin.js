@@ -7,6 +7,7 @@ import './Admin.css';
 import membersimg from '../../../assets/img/members.svg';
 import studentsimg from '../../../assets/img/students.svg'
 import shieldimg from '../../../assets/img/shield.svg'
+import toolsimg from '../../../assets/img/tools.svg'
 class Admin extends Component {
     state = {
         userinfo: null,        
@@ -43,7 +44,7 @@ class Admin extends Component {
                         <Card.Img variant="top" src={studentsimg} width={71} height={95} top='400px' style={{ marginTop: '1em' }} />
                         <Card.Body>
                             <NavLink to={{
-                                pathname: '/Portal/Admin/Students/1',
+                                pathname: '/Portal/Admin/Students',
                                 state: { userinfo: this.state.userinfo },
                             }}><Button variant="primary">学生信息</Button></NavLink>
                         </Card.Body>
@@ -55,6 +56,15 @@ class Admin extends Component {
                                 pathname: '/Portal/Admin/Password',
                                 state: { userinfo: this.state.userinfo },
                             }}><Button variant="primary">密码管理</Button></NavLink>
+                        </Card.Body>
+                    </Card>
+                    <Card style={{ width: '17rem',  }}>
+                        <Card.Img variant="top" src={toolsimg} width={71} height={95} top='400px' style={{ marginTop: '1em' }} />
+                        <Card.Body>
+                            <NavLink to={{
+                                pathname: '/Portal/Admin/General',
+                                state: { userinfo: this.state.userinfo },
+                            }}><Button variant="primary">常规功能</Button></NavLink>
                         </Card.Body>
                     </Card>
                 </section>
