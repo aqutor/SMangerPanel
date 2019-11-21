@@ -1,7 +1,7 @@
 import { withRouter } from 'react-router-dom';
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Table,  Modal, Button, Row, Form, Col } from 'react-bootstrap';
+import { Table,  Modal, Button, Row, Form, Col, InputGroup, FormControl } from 'react-bootstrap';
 
 
 class StudentInfo extends Component {
@@ -10,12 +10,13 @@ class StudentInfo extends Component {
         userinfo: null,
         active: null,
         pag: 1,
-        pagesize: null,
+        page: null,
         students: null,
         show: false,
         showAdd: false,
         isChecked: null,
         isAddChecked: null,
+        newPage: null,
         adduser: {
             sid: null,
             sname: null,
@@ -171,7 +172,7 @@ class StudentInfo extends Component {
         axios.get('/api/student/manage', {
             params: {
                 pagenum: this.state.pag,
-                pagesize: 20,
+                pagesize: 25,
                 data_type: 'fil',
             },
             headers: {
@@ -182,10 +183,9 @@ class StudentInfo extends Component {
         .then((res) => {
             console.log(res);
             if(res.data.status === 200){
-                let pagesize = Math.ceil(res.data.data.total/20);
                 this.setState({
                     students: res.data.data.student,
-                    pagesize: pagesize,
+                    page: Math.ceil(res.data.data.totol / 25),
                 })
 
             }
@@ -193,6 +193,43 @@ class StudentInfo extends Component {
             else{
                 alert(res.data.msg);
             }
+        })
+        .catch((err) => {
+            console.log("AXIOS ERROR: ", err);
+            return;
+        })
+    }
+
+    pageChangeHandler = (event) => {
+        this.setState({
+            newPage: Math.floor(event.target.value),
+        })
+    }
+
+    pageClickHandler = () => {
+        
+        if(this.state.newPage > this.state.page || this.state.newPage < 1){
+            alert('页码格式错误');
+            return;
+        }
+        axios.get('/api/student/manage', {
+            params: {
+                pagenum: this.state.newPage,
+                pagesize: 25,
+                data_type: 'fil',
+            },
+            headers: {
+                'token': this.props.location.state.userinfo.token,
+                'Content-Type': 'application/x-www-form-urlencoded',
+            }
+          } )
+        .then((res) => {
+            console.log(res);
+            this.setState({
+                members: res.data.data.members,
+                total: res.data.data.total,
+                page: Math.ceil(res.data.data.total / 25),
+            })
         })
         .catch((err) => {
             console.log("AXIOS ERROR: ", err);
@@ -292,6 +329,43 @@ class StudentInfo extends Component {
                 ...this.state.active,
                 major: event.target.value,
             }
+        })
+    }
+
+    pageChangeHandler = (event) => {
+        this.setState({
+            newPage: Math.floor(event.target.value),
+        })
+    }
+
+    pageClickHandler = () => {
+        
+        if(this.state.newPage > this.state.page || this.state.newPage < 1){
+            alert('页码格式错误');
+            return;
+        }
+        axios.get('/api/student/manage', {
+            params: {
+                pagenum: this.state.newPage,
+                pagesize: 25,
+                data_type: 'fil',
+            },
+            headers: {
+                'token': this.props.location.state.userinfo.token,
+                'Content-Type': 'application/x-www-form-urlencoded',
+            }
+          } )
+        .then((res) => {
+            console.log(res);
+            this.setState({
+                students: res.data.data.student,
+                total: res.data.data.total,
+                pagesize: Math.ceil(res.data.data.total / 25),
+            })
+        })
+        .catch((err) => {
+            console.log("AXIOS ERROR: ", err);
+            return;
         })
     }
 
@@ -523,8 +597,21 @@ class StudentInfo extends Component {
                     </tbody>
                 </Table>
 
-                <br />
-                <p>分页功能暂未优化且不可用。</p>
+                <InputGroup className="mb-3" style = {{width: "12em"}}>
+                    
+                    <FormControl
+                    aria-label="Default"
+                    aria-describedby="inputGroup-sizing-default"
+                    type = 'number'
+                    onChange={(event) => this.pageChangeHandler(event)}
+                    />
+                    <InputGroup.Prepend>
+                        <InputGroup.Text id="inputGroup-sizing-default">/{this.state.page} 页</InputGroup.Text>
+                    </InputGroup.Prepend>
+                    <InputGroup.Append>
+                        <Button variant="outline-secondary" onClick={() => this.pageClickHandler()} >跳转</Button>
+                    </InputGroup.Append>
+                </InputGroup>
 
                 <Modal size = 'lg' show = {this.state.show} onHide = {this.handleClose}>
                     <Modal.Header closeButton>

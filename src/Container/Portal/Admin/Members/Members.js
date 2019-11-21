@@ -1,6 +1,6 @@
 import { withRouter } from 'react-router-dom';
 import React, { Component } from 'react';
-import { Table,  Modal, Button, Row, Form, Col } from 'react-bootstrap';
+import { Table,  Modal, Button, Row, Form, Col, InputGroup, FormControl } from 'react-bootstrap';
 import axios from 'axios';
 import './Members.css';
 
@@ -14,7 +14,9 @@ class Members extends Component {
         activeNote: null,
         showAdd: false,
         addSID: null,
-
+        total: null,
+        page: null,
+        newPage: null,
     };
     
     componentDidMount(){
@@ -26,8 +28,8 @@ class Members extends Component {
             // loading config
             axios.get('/api/member/manage', {
                 params: {
-                    pagenum: 0,
-                    pagesize: 0,
+                    pagenum: 1,
+                    pagesize: 25,
                     data_type: 'fil',
                 },
                 headers: {
@@ -39,7 +41,8 @@ class Members extends Component {
                 console.log(res);
                 this.setState({
                     members: res.data.data.members,
-                    totol: res.data.data.totol,
+                    total: res.data.data.total,
+                    page: Math.ceil(res.data.data.total / 25),
                 })
             })
             .catch((err) => {
@@ -151,8 +154,9 @@ class Members extends Component {
                 stuclass: event.target.value.trim(),
             }
         })
-        
     }
+
+    
 
     addSIDHandler = (event) => {
         this.setState({
@@ -196,6 +200,43 @@ class Members extends Component {
             return;
         })
         
+    }
+
+    pageChangeHandler = (event) => {
+        this.setState({
+            newPage: Math.floor(event.target.value),
+        })
+    }
+
+    pageClickHandler = () => {
+        
+        if(this.state.newPage > this.state.page || this.state.newPage < 1){
+            alert('页码格式错误');
+            return;
+        }
+        axios.get('/api/member/manage', {
+            params: {
+                pagenum: this.state.newPage,
+                pagesize: 25,
+                data_type: 'fil',
+            },
+            headers: {
+                'token': this.props.location.state.userinfo.token,
+                'Content-Type': 'application/x-www-form-urlencoded',
+            }
+          } )
+        .then((res) => {
+            console.log(res);
+            this.setState({
+                members: res.data.data.members,
+                total: res.data.data.total,
+                page: Math.ceil(res.data.data.total / 25),
+            })
+        })
+        .catch((err) => {
+            console.log("AXIOS ERROR: ", err);
+            return;
+        })
     }
 
     submitHandler = (event) => {
@@ -387,6 +428,21 @@ class Members extends Component {
                         {memberItems}
                     </tbody>
                 </Table>
+                <InputGroup className="mb-3" style = {{width: "12em"}}>
+                    
+                    <FormControl
+                    aria-label="Default"
+                    aria-describedby="inputGroup-sizing-default"
+                    type = 'number'
+                    onChange={(event) => this.pageChangeHandler(event)}
+                    />
+                    <InputGroup.Prepend>
+                        <InputGroup.Text id="inputGroup-sizing-default">/{this.state.page} 页</InputGroup.Text>
+                    </InputGroup.Prepend>
+                    <InputGroup.Append>
+                        <Button variant="outline-secondary" onClick={() => this.pageClickHandler()} >跳转</Button>
+                    </InputGroup.Append>
+                </InputGroup>
 
                 <Modal size = 'lg' show = {this.state.show} onHide = {this.handleClose}>
                     <Modal.Header closeButton>

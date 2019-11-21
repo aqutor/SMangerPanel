@@ -8,8 +8,9 @@ class Add extends Component {
 
     state = {
         userinfo: null,
-        purl: 'https://o2.airscr.com/content/images/2019/11/sense-brian-cop_2.jpg',
+        purl: null,
         vdate: null,
+        uploadMsg: null,
     };
 
     componentDidMount(){
@@ -30,6 +31,36 @@ class Add extends Component {
         this.setState({
             vdate: event.target.value.replace(/-/g,''),
         })
+    }
+
+    picChangeHandler = (event) => {
+        if(event.target.value){
+            let formData = new FormData();
+            formData.append("smfile", event.target.files[0]);
+            axios.post('https://sm.ms/api/v2/upload', formData, {
+                headers: {
+                'Content-Type': 'multipart/form-data'
+                }
+            })
+            .then((res) => {
+                if(res.data.success === true){
+                    this.setState({
+                        uploadMsg: '图片上传成功',
+                        purl: res.data.data.url,
+                    })
+                }
+                else{
+                    this.setState({
+                        uploadMsg: res.data.message,
+                    })
+                }
+
+            })
+            .catch((err) => {
+                console.log("AXIOS ERROR: ", err);
+                return;
+            })
+            }
     }
 
     submitHandler = (event) => {
@@ -95,7 +126,8 @@ class Add extends Component {
                     <Form.Row>
                         <Form.Group as={Col} controlId="formImg">
                         <Form.Label>图片</Form.Label>
-                        <Form.Control type = 'file' accept="image/*" />
+                        <Form.Control type = 'file' accept="image/*" onChange = {(event) => this.picChangeHandler(event)} />
+                        <Form.Label><div style = {{color: 'blue', fontSize: '12px'}}> {this.state.uploadMsg}</div></Form.Label>
                         </Form.Group>    
                     </Form.Row>
                     

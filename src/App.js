@@ -28,18 +28,7 @@ class App extends Component{
   state = {
     userinfo: null,
   }
-
-  // userInfoCallback = (userInfo) => {
-  //   if(userInfo){
-  //     this.setState({
-  //       userinfo: userInfo,
-  //     });
-  //   }
-    
-  // }
-
   
-
   render(){
 
     return(
@@ -72,7 +61,6 @@ class App extends Component{
             <Route path='/Portal/Sign/Add' exact component = {() => <SignAdd />} />
             <Route path='/Portal/Violation/Records' component = {() => <ViolationRecords />} />
             <Route path='/Portal/Violation/Add' exact component = {() => <ViolationAdd />} />
-            
           </Switch>
         </main>
 

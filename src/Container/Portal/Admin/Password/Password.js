@@ -1,7 +1,7 @@
 import { withRouter } from 'react-router-dom';
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Table, Form, Col, Button, Row, Modal, InputGroup, Image } from 'react-bootstrap';
+import { Table, Form, Col, Button, Row, Modal, InputGroup, Image, FormControl } from 'react-bootstrap';
 
 
 class Password extends Component {
@@ -11,6 +11,8 @@ class Password extends Component {
         records: null,
         show: false,
         active: null,
+        page: null,
+        newPage: null,
     }
 
     componentDidMount(){
@@ -24,8 +26,8 @@ class Password extends Component {
 
         axios.get('/api/forget_pwd', {
             params: {
-                pagenum: 0,
-                pagesize: 0,
+                pagenum: 1,
+                pagesize: 25,
             },
             headers: {
                 'token': this.props.location.state.userinfo.token,
@@ -36,7 +38,7 @@ class Password extends Component {
             console.log(res);
             this.setState({
                 records: res.data.data.list,
-                totol: res.data.data.totol,
+                page: Math.ceil(res.data.data.total / 25),
             })
         })
         .catch((err) => {
@@ -56,6 +58,43 @@ class Password extends Component {
         this.setState({
             show: true,
             active: props
+        })
+    }
+
+    pageChangeHandler = (event) => {
+        this.setState({
+            newPage: Math.floor(event.target.value),
+        })
+    }
+
+    pageClickHandler = () => {
+        
+        if(this.state.newPage > this.state.page || this.state.newPage < 1){
+            alert('页码格式错误');
+            return;
+        }
+        axios.get('/api/forget_pwd', {
+            params: {
+                pagenum: this.state.newPage,
+                pagesize: 25,
+                data_type: 'fil',
+            },
+            headers: {
+                'token': this.props.location.state.userinfo.token,
+                'Content-Type': 'application/x-www-form-urlencoded',
+            }
+          } )
+        .then((res) => {
+            console.log(res);
+            this.setState({
+                records: res.data.data.list,
+                total: res.data.data.total,
+                page: Math.ceil(res.data.data.total / 25),
+            })
+        })
+        .catch((err) => {
+            console.log("AXIOS ERROR: ", err);
+            return;
         })
     }
 
@@ -285,6 +324,22 @@ class Password extends Component {
                         {recordItems}
                     </tbody>
                 </Table>
+
+                <InputGroup className="mb-3" style = {{width: "12em"}}>
+                    <FormControl
+                    aria-label="Default"
+                    aria-describedby="inputGroup-sizing-default"
+                    type = 'number'
+                    onChange={(event) => this.pageChangeHandler(event)}
+                    />
+                    <InputGroup.Prepend>
+                        <InputGroup.Text id="inputGroup-sizing-default">/{this.state.page} 页</InputGroup.Text>
+                    </InputGroup.Prepend>
+                    <InputGroup.Append>
+                        <Button variant="outline-secondary" onClick={() => this.pageClickHandler()} >跳转</Button>
+                    </InputGroup.Append>
+                </InputGroup>
+
                 <Modal size = 'lg' show = {this.state.show} onHide = {this.handleClose}>
                     <Modal.Header closeButton>
                         <Modal.Title>详细手签记录</Modal.Title>

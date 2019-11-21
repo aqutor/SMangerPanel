@@ -10,10 +10,16 @@ class Forget extends Component {
         sid: null,
         email: null,
         newpwd: null,
-        purl: 'https://o2.airscr.com/content/images/2019/11/sense-brian-cop_2.jpg',
+        purl: null,
         cnewpwd: null,
         showAlert: false,
         eventid: null,
+        uploadMsg: null,
+
+    }
+
+    componentDidUpdate(){
+        console.log(this.state);
     }
 
     sidChangeHandler = (event) => {
@@ -65,8 +71,6 @@ class Forget extends Component {
             return;
         }
 
-        // workaroud.
-
         if(!this.state.purl){
             alert('请上传图片');
             return;
@@ -99,6 +103,38 @@ class Forget extends Component {
             console.log("AXIOS ERROR: ", err);
             return;
         })
+    }
+
+
+
+    picChangeHandler = (event) => {
+        if(event.target.value){
+            let formData = new FormData();
+        formData.append("smfile", event.target.files[0]);
+        axios.post('https://sm.ms/api/v2/upload', formData, {
+            headers: {
+            'Content-Type': 'multipart/form-data'
+            }
+        })
+        .then((res) => {
+            if(res.data.success === true){
+                this.setState({
+                    uploadMsg: '图片上传成功',
+                    purl: res.data.data.url,
+                })
+            }
+            else{
+                this.setState({
+                    uploadMsg: res.data.message,
+                })
+            }
+
+        })
+        .catch((err) => {
+            console.log("AXIOS ERROR: ", err);
+            return;
+        })
+        }
     }
 
     render(){
@@ -145,7 +181,8 @@ class Forget extends Component {
                     <Form.Row>
                         <Form.Group as={Col} controlId="formPic">
                             <Form.Label>手持学生卡照片<div style = {{color: 'grey', fontSize: '12px'}}> 您的资料被将会严格保密且仅用作认证使用，您可在能够辨认的情况下加上水印上传。如果不放心此认证方式，请当面联系队长。</div></Form.Label>
-                            <Form.Control type="file" accept="image/*" />
+                            <Form.Control type="file" accept="image/*" onChange = {(event) => this.picChangeHandler(event)} />
+                            <Form.Label><div style = {{color: 'blue', fontSize: '12px'}}> {this.state.uploadMsg}</div></Form.Label>
                         </Form.Group>
                     </Form.Row>
 
