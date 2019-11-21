@@ -41,7 +41,7 @@ class Records extends Component {
             console.log(res);
             this.setState({
                 records: res.data.data.list,
-                page: Math.ceil(res.data.data.total),
+                page: Math.ceil(res.data.data.total / 25),
             })
         })
         .catch((err) => {
@@ -76,7 +76,7 @@ class Records extends Component {
         .then((res) => {
             console.log(res);
             this.setState({
-                members: res.data.data.members,
+                records: res.data.data.list,
                 total: res.data.data.total,
                 page: Math.ceil(res.data.data.total / 25),
             })
