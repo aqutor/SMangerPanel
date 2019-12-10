@@ -11,4 +11,4 @@
 2. Run `npm start` to view the project
 
 # View Online
-Visit https://smp.workers.airscr.com/ for the built version 1.0.6-preview.
+Visit https://smp.workers.airscr.com/ for the built version 1.0.10-rc.
