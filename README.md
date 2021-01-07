@@ -1,5 +1,5 @@
 # SMangerPanel
-A frontend proejct for morning running management using React framework. 
+A frontend project for morning running management using React framework.
 
 # Requirements
 1. Node.js >= v12.11.0
